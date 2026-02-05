@@ -85,5 +85,8 @@ dependencies {
 
         // Pager (Foundation)
         implementation("androidx.compose.foundation:foundation:1.10.2")
+
+    //lotte
+    implementation("com.airbnb.android:lottie-compose:6.7.1")
     }
 
