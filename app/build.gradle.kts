@@ -88,5 +88,7 @@ dependencies {
 
     //lotte
     implementation("com.airbnb.android:lottie-compose:6.7.1")
-    }
+    implementation("androidx.compose.material:material-icons-extended")
+
+}
 
