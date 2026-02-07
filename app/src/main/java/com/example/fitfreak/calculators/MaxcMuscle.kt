@@ -1,6 +1,7 @@
 package com.example.fitfreak.calculators
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -18,6 +21,8 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -44,13 +49,27 @@ fun MaxMuscleCalculatorScreen() {
     var bodyFatGoal by remember { mutableStateOf("10") } // Default to 10% shredded
     var showResult by remember { mutableStateOf(false) }
 
+    var showInfoDialog by remember { mutableStateOf(false) }
+
+
     val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Genetic Muscle Potential", fontWeight = FontWeight.Bold) }
-            )
+            CenterAlignedTopAppBar(title = { Text("Max muscle gain ")},
+                actions = {
+                    // INFO BUTTON
+                    IconButton(onClick = { showInfoDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Info",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+
+
+                })
         }
     ) { padding ->
         Column(
@@ -62,6 +81,16 @@ fun MaxMuscleCalculatorScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Paste your LottieAnimation here
+            }
             Text(
                 "Estimate your maximum natural muscle mass based on your skeletal frame.",
                 style = MaterialTheme.typography.bodyMedium,

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,6 +32,8 @@ fun PRCalculatorScreen() {
 
     val exercises = listOf("Bench Press", "Deadlift", "Squat", "Overhead Press")
     val scrollState = rememberScrollState()
+    var showInfoDialog by remember { mutableStateOf(false) }
+
 
     // Lottie Animation Logic
    // val composition by rememberLottieComposition(LottieCompositionSpec.run { RawRes(R.raw.workout_anim) })
@@ -37,9 +41,20 @@ fun PRCalculatorScreen() {
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("PR / 1-Rep Max Calculator", fontWeight = FontWeight.Bold) }
-            )
+            CenterAlignedTopAppBar(title = { Text("Calorie & Macro Tracker")},
+                actions = {
+                    // INFO BUTTON
+                    IconButton(onClick = { showInfoDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Info",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+
+
+                })
         }
     ) { padding ->
         Column(
@@ -51,6 +66,15 @@ fun PRCalculatorScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Paste your LottieAnimation here
+            }
             // Exercise Selector
             Text("Select Compound Lift", style = MaterialTheme.typography.titleMedium)
             ScrollableTabRow(

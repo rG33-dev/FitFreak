@@ -1,6 +1,7 @@
 package com.example.fitfreak.calculators
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,12 +11,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -42,11 +47,25 @@ fun StrengthLevelScreen() {
     var showResults by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
+    var showInfoDialog by remember { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text("Strength Level (Nippard Scale)") })
-        }
+            CenterAlignedTopAppBar(title = { Text("Calorie & Macro Tracker")},
+                actions = {
+                    // INFO BUTTON
+                    IconButton(onClick = { showInfoDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Info",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+
+
+                })}
     ) { padding ->
         Column(
             modifier = Modifier
@@ -57,6 +76,15 @@ fun StrengthLevelScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Paste your LottieAnimation here
+            }
             Text(
                 "Find your rank from Rookie to Advanced based on your 1-Rep Maxes.",
                 style = MaterialTheme.typography.bodyMedium,

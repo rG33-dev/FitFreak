@@ -3,6 +3,8 @@ package com.example.fitfreak.calculators
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,18 +22,27 @@ fun SexualHealthScreen() {
     var sleepHours by remember { mutableStateOf(1f) } // Default: 5-6 hours
     var alcoholIntake by remember { mutableStateOf(1f) } // Default: Socially
     var showResult by remember { mutableStateOf(false) }
+    var showInfoDialog by remember { mutableStateOf(false) }
+
 
     val scrollState = rememberScrollState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(title = {
-                Text(
-                    "Sexual Wellness Score",
-                    fontWeight = FontWeight.Bold
-                )
-            })
-        }
+    Scaffold(topBar = {
+        CenterAlignedTopAppBar(title = { Text("Calorie & Macro Tracker")},
+            actions = {
+                // INFO BUTTON
+                IconButton(onClick = { showInfoDialog = true }) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = "Info",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+
+
+            })}
+
     ) { padding ->
         Column(
             modifier = Modifier
@@ -42,6 +53,14 @@ fun SexualHealthScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Paste your LottieAnimation here
+            }
             // Gender Selection
             GenderSelection(isMale = isMale, onGenderSelect = { isMale = it })
 

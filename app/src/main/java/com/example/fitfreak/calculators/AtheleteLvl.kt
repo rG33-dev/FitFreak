@@ -1,4 +1,5 @@
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,16 +10,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,14 +45,49 @@ fun EnduranceLevelScreen() {
     var age by remember { mutableStateOf("") }
     var isMale by remember { mutableStateOf(true) }
     var showResult by remember { mutableStateOf(false) }
+    var showInfoDialog by remember { mutableStateOf(false) }
+
 
     val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text("Endurance Checker (Cooper Test)") })
+            CenterAlignedTopAppBar(title = { Text("Calorie & Macro Tracker")},
+                actions = {
+                    // INFO BUTTON
+                    IconButton(onClick = { showInfoDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Info",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+
+
+                })
         }
     ) { padding ->
+        if (showInfoDialog) {
+            AlertDialog(
+                onDismissRequest = { showInfoDialog = false },
+                title = { Text(text = "About the Cooper Test") },
+                text = {
+                    Column {
+                        Text("The Cooper Test is a physical fitness test designed by Kenneth H. Cooper in 1968.")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("• Objective: Run as far as possible in 12 minutes.")
+                        Text("• Measures: Aerobic fitness and VO2 Max estimation.")
+                        Text("• Standard: 2800m+ is considered 'Elite' for most age groups.")
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { showInfoDialog = false }) {
+                        Text("Got it")
+                    }
+                }
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -55,6 +97,15 @@ fun EnduranceLevelScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                // Paste your LottieAnimation here
+            }
+
             Text(
                 "How many meters can you run in 12 minutes?",
                 style = MaterialTheme.typography.bodyLarge,
