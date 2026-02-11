@@ -3,8 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 
-  
+
+
+
+
+
 }
 
 android {
@@ -89,6 +94,13 @@ dependencies {
     //lotte
     implementation("com.airbnb.android:lottie-compose:6.7.1")
     implementation("androidx.compose.material:material-icons-extended")
+
+    //firebase
+    implementation("com.google.firebase:firebase-auth:24.0.1")
+    implementation("androidx.credentials:credentials:1.5.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.2.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
 
 }
 

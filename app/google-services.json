@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "468073555378",
+    "project_id": "fitfreak-72348",
+    "storage_bucket": "fitfreak-72348.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468073555378:android:653fe522555375645cf0ab",
+        "android_client_info": {
+          "package_name": "com.example.fitfreak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjeNt4mGuj7BXjd7fgeQotvgo8zTy_RFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
