@@ -3,6 +3,9 @@ package com.example.fitfreak.presentation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowForward
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -64,7 +67,7 @@ fun MainScreen(navController: NavHostController) {
     )
 
     // Lottie Header Animation
-   val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.drawable.ic_launcher_background))
+   val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.kick))
 
     Scaffold(
         topBar = {
@@ -164,11 +167,11 @@ fun CalculatorRowItem(menu: CalculatorMenu, onClick: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-//            Icon(
-//                imageVector = Icons.Default.ArrowForward,
-//                contentDescription = null,
-//                tint = menu.color
-//            )
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = null,
+                tint = menu.color
+            )
         }
     }
 }
