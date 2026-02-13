@@ -23,6 +23,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.fitfreak.R
+import com.google.firebase.auth.FirebaseAuth
 
 // Data class to define our Menu Items
 data class CalculatorMenu(
@@ -35,6 +36,16 @@ data class CalculatorMenu(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
+
+    val auth = FirebaseAuth.getInstance()
+    androidx.compose.runtime.LaunchedEffect(auth.currentUser) {
+        if (auth.currentUser == null) {
+            navController.navigate("signup_screen") {
+                popUpTo(0)
+            }
+        }
+    }
+
     val menuItems = listOf(
         CalculatorMenu("BMI Calculator", "Check your body mass index", "bmi", Color(0xFF6200EE)),
         CalculatorMenu("Calorie Tracker", "Bulk, Cut, or Maintain", "calories", Color(0xFF03DAC5)),
@@ -130,6 +141,23 @@ fun MainScreen(navController: NavHostController) {
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
                 ) {
                     Text("Unlock Pro Features")
+                }
+                // ADD THIS TEMPORARY BUTTON
+                Button(
+                    onClick = {
+
+                        auth.signOut()
+
+
+                        navController.navigate("signup_screen") {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                ) {
+                    Text("LOGOUT (TEMP)")
                 }
             }
         }

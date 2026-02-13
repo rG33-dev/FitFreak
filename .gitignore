@@ -13,5 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
-# Project-specific files to ignore
+
+Project-specific files to ignore
 IdeasToWorkOn
+# Project Planning & Ideas
+IdeasToWorkO
