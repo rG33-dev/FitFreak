@@ -37,13 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.FirebaseAuth
 
-@Preview(showBackground = true)
+
 @Composable
-fun Preview1() {
-    SignUpScreen(onNavigateToLogin = {})
-}
-@Composable
-fun SignUpScreen(onNavigateToLogin: () -> Unit,) {
+
+fun SignUpScreen(
+    onNavigateToLogin: () -> Unit,
+    onSignUpSuccess: () -> Unit
+)
+
+{
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
@@ -108,7 +111,17 @@ fun SignUpScreen(onNavigateToLogin: () -> Unit,) {
                     if (email.isNotEmpty() && password.isNotEmpty()) {
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
-                                if (task.isSuccessful) { /* Handle Success */
+                                if (task.isSuccessful) {
+                                    {
+
+                                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+
+                                            if (task.isSuccessful) {onSignUpSuccess()}
+                                            else {
+                                              println("Error : ${task.exception}")
+                                            }
+                                        }
+                                    }
                                 }
                             }
                     }

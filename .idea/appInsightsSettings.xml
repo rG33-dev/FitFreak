@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.fitfreak" />
-                  <option name="mobileSdkAppId" value="1:468073555378:android:653fe522555375645cf0ab" />
-                  <option name="projectId" value="fitfreak-72348" />
-                  <option name="projectNumber" value="468073555378" />
+                  <option name="mobileSdkAppId" value="1:1005536054840:android:07521aee1ce18465c2e0cd" />
+                  <option name="projectId" value="ecommerce-e2349" />
+                  <option name="projectNumber" value="1005536054840" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

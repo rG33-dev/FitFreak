@@ -11,9 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.fitfreak.calculators.*
-import com.example.fitfreak.presentation.FitFreakContainer
-import com.example.fitfreak.presentation.MainScreen
-import com.example.fitfreak.presentation.PreviewScreen
+import com.example.fitfreak.presentation.*
 import com.example.fitfreak.ui.theme.FitFreakTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,30 +27,55 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun FitFreakApp() {
-    // 1. Create the NavController here
     val navController = rememberNavController()
-    FitFreakContainer() {
-        // 2. NavHost defines the navigation graph
+
+    // Wrapper for Global Dark Theme and common UI
+    FitFreakContainer {
         NavHost(
             navController = navController,
-            startDestination = "PreviewScreen" // The first screen to show
+            startDestination = "PreviewScreen"
         ) {
-
-
+            // 1. Splash / Preview Logic
             composable("PreviewScreen") {
                 PreviewScreen(navController = navController)
             }
-            // --- Define all your screens here ---
 
-            // The Main Dashboard Screen
+            // 2. Auth Flow
+            composable("signup_screen") {
+                SignUpScreen(
+                    onNavigateToLogin = {
+                        navController.navigate("login_screen")
+                    },
+                    onSignUpSuccess = {
+                        navController.navigate("main_screen") {
+                            popUpTo("signup_screen") { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable("login_screen") {
+                LoginScreen(
+                    onNavigateToSignUp = {
+                        navController.navigate("signup_screen")
+                    },
+                    onLoginSuccess = {
+                        navController.navigate("main_screen") {
+                            popUpTo("login_screen") { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            // 3. Main Content
             composable("main_screen") {
-                // 3. Pass the created navController to your MainScreen
                 MainScreen(navController = navController)
             }
 
-            // Add a composable route for each calculator screen
+            // 4. Calculators
             composable("bmi") { BMICalculatorScreen() }
             composable("calories") { CaloriesCalculatorScreen() }
             composable("endurance") { EnduranceLevelScreen() }
@@ -62,7 +85,9 @@ fun FitFreakApp() {
             composable("strength_lvl") { StrengthLevelScreen() }
             composable("sexual_health") { SexualHealthScreen() }
 
-            // Add more screens here as you build them
+            // New "How to Improve" Screen
+           // composable("how_to_improve") { HowToImproveScreen() }
         }
     }
 }
+

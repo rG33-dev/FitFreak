@@ -25,12 +25,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
 fun PreviewScreen(navController: NavHostController) {
+    LaunchedEffect(Unit) {
+        delay(1000)
+        // Check if user is already logged in
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            navController.navigate("main_screen") {
+                popUpTo("preview_screen") { inclusive = true }
+            }
+        } else {
+            navController.navigate("signup_screen") {
+                popUpTo("preview_screen") { inclusive = true }
+            }
+        }
+    }
 
-    // List of Random Quotes
+
     val quotes = listOf(
         "The only bad workout is the one that didn't happen.",
         "Don't stop when you're tired. Stop when you're done.",
@@ -69,13 +84,13 @@ fun PreviewScreen(navController: NavHostController) {
                     .padding(bottom = 24.dp),
                 contentAlignment = Alignment.Center
             ) {
-                 Image(
-                     painter = painterResource(id = com.example.fitfreak.R.drawable.logo),
-                     contentDescription = "App Logo",
-                     modifier = Modifier.fillMaxSize(),
-                     contentScale = ContentScale.Fit
-                 )
-              //   Text("LOGO HERE", color = Color.Gray, fontSize = 12.sp)
+                Image(
+                    painter = painterResource(id = com.example.fitfreak.R.drawable.logo),
+                    contentDescription = "App Logo",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Fit
+                )
+                //   Text("LOGO HERE", color = Color.Gray, fontSize = 12.sp)
             }
 
             // --- QUOTE ---
