@@ -23,6 +23,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.fitfreak.R
+import com.example.fitfreak.data.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 // Data class to define our Menu Items
@@ -35,7 +36,7 @@ data class CalculatorMenu(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
 
     val auth = FirebaseAuth.getInstance()
     androidx.compose.runtime.LaunchedEffect(auth.currentUser) {
@@ -142,11 +143,11 @@ fun MainScreen(navController: NavHostController) {
                 ) {
                     Text("Unlock Pro Features")
                 }
-                // ADD THIS TEMPORARY BUTTON
+
                 Button(
                     onClick = {
 
-                        auth.signOut()
+                        authViewModel.logout()
 
 
                         navController.navigate("signup_screen") {
@@ -157,7 +158,7 @@ fun MainScreen(navController: NavHostController) {
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                 ) {
-                    Text("LOGOUT (TEMP)")
+                    Text("LogOut")
                 }
             }
         }
