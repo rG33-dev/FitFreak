@@ -28,18 +28,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.fitfreak.data.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-    LoginScreen(onNavigateToSignUp = {}, onLoginSuccess = {})
 
-
-}
 @Composable
-fun LoginScreen(onNavigateToSignUp: () -> Unit, onLoginSuccess: () -> Unit) {
+fun LoginScreen(onNavigateToSignUp: () -> Unit, onLoginSuccess: () -> Unit, authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val auth = remember { FirebaseAuth.getInstance() }
@@ -81,14 +76,18 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit, onLoginSuccess: () -> Unit) {
 
             Button(
                 onClick = {
-                    auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener { if (it.isSuccessful) onLoginSuccess() }
+                    if (email.isNotEmpty() && password.isNotEmpty()) {
+                        authViewModel.login(email,password)
+                    }
+                    else{
+                        error("Login Failed")
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
             ) {
-                Text("LOGIN")
+                Text("Old Freak")
             }
 
             TextButton(onClick = onNavigateToSignUp) {

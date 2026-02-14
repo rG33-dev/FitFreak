@@ -42,7 +42,7 @@ class AuthViewModel : ViewModel() {
 
     }
 
-    fun SignUp(email: String, password: String) {
+    fun signUp(email: String, password: String) {
         _authState.value = AuthState.Loading
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->

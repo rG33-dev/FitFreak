@@ -1,5 +1,3 @@
-package com.example.fitfreak.presentation
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +13,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -22,6 +21,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,25 +32,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.auth.FirebaseAuth
-
+import com.example.fitfreak.data.AuthState
+import com.example.fitfreak.data.AuthViewModel
 
 @Composable
-
 fun SignUpScreen(
     onNavigateToLogin: () -> Unit,
-    onSignUpSuccess: () -> Unit
-)
-
-{
+    onSignUpSuccess: () -> Unit,
+    authViewModel: AuthViewModel
+) {
+    val authState by authViewModel.authState
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
-    val auth = remember { FirebaseAuth.getInstance() }
+
+    // Use LaunchedEffect to navigate when the ViewModel updates the state to Authenticated
+    LaunchedEffect(authState) {
+        if (authState is AuthState.Authenticated) {
+            onSignUpSuccess()
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -75,6 +79,7 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Full Name Input
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -82,20 +87,28 @@ fun SignUpScreen(
                 leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
                     unfocusedBorderColor = Color.DarkGray,
                     focusedBorderColor = MaterialTheme.colorScheme.primary
                 )
             )
 
+            // Email Input
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Default.Mail, contentDescription = null) },
                 modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White
+                )
             )
 
+            // Password Input
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -103,35 +116,41 @@ fun SignUpScreen(
                 leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White
+                )
             )
 
-            Button(
-                onClick = {
-                    if (email.isNotEmpty() && password.isNotEmpty()) {
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    {
+            Spacer(modifier = Modifier.height(8.dp))
 
-                                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            // Loading Indicator or Sign Up Button
+            if (authState is AuthState.Loading) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+            } else {
+                Button(
+                    onClick = {
+                        if (email.isNotEmpty() && password.isNotEmpty()) {
+                            authViewModel.signUp(email, password)
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Text("SIGN UP", fontWeight = FontWeight.Bold)
+                }
+            }
 
-                                            if (task.isSuccessful) {onSignUpSuccess()}
-                                            else {
-                                              println("Error : ${task.exception}")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Text("SIGN UP", fontWeight = FontWeight.Bold)
+            // Error Message Display
+            if (authState is AuthState.Error) {
+                Text(
+                    text = (authState as AuthState.Error).message,
+                    color = Color.Red,
+                    fontSize = 14.sp
+                )
             }
 
             TextButton(onClick = onNavigateToLogin) {
