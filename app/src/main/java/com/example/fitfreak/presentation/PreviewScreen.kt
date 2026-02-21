@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -58,7 +59,7 @@ fun PreviewScreen(navController: NavHostController) {
 
     // Navigation Logic: Wait 1 second then move to Main Screen
     LaunchedEffect(Unit) {
-        delay(1000) // 1 second delay
+        delay(2000) // 1 second delay
         navController.navigate("main_screen") {
             popUpTo("preview_screen") { inclusive = true } // Remove preview from backstack
         }
@@ -85,7 +86,7 @@ fun PreviewScreen(navController: NavHostController) {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = com.example.fitfreak.R.drawable.logo),
+                    painter = painterResource(id = com.example.fitfreak.R.drawable.applogi),
                     contentDescription = "App Logo",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Fit
@@ -107,12 +108,16 @@ fun PreviewScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "FitFreak",
+                text = "Fit Score",
                 color = MaterialTheme.colorScheme.primary,
                 letterSpacing = 4.sp,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.labelLarge
             )
+            Spacer(modifier = Modifier.height(32.dp))
+
+
+           // Row {  }
         }
     }
 }
