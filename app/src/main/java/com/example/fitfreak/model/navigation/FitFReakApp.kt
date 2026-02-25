@@ -2,6 +2,7 @@ package com.example.fitfreak.model.navigation
 
 import BMICalculatorScreen
 import CaloriesCalculatorScreen
+import MainScreen
 import SignUpScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
