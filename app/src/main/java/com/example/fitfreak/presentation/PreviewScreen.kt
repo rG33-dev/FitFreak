@@ -58,12 +58,12 @@ fun PreviewScreen(navController: NavHostController) {
     val randomQuote = quotes.random()
 
     // Navigation Logic: Wait 1 second then move to Main Screen
-    LaunchedEffect(Unit) {
-        delay(2000) // 1 second delay
-        navController.navigate("main_screen") {
-            popUpTo("preview_screen") { inclusive = true } // Remove preview from backstack
-        }
-    }
+//    LaunchedEffect(Unit) {
+//        delay(2000) // 1 second delay
+//        navController.navigate("main_screen") {
+//            popUpTo("preview_screen") { inclusive = true } // Remove preview from backstack
+//        }
+//    }
 
     Box(
         modifier = Modifier
