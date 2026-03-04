@@ -29,7 +29,7 @@ sealed class ThisScreen(val route: String, val title: String, val icon: ImageVec
     object Articles : ThisScreen("articles_screen", "Articles", Icons.Default.Article)
 }
 @Composable
-fun RootContainer(navController: NavHostController, function: @Composable (Modifier) -> Unit) {
+fun RootContainer(navController: NavHostController, content: @Composable (Modifier) -> Unit) {
     val items = listOf(ThisScreen.Home, ThisScreen.Tools, ThisScreen.Articles)
 
     Scaffold(bottomBar = {
@@ -67,7 +67,8 @@ fun RootContainer(navController: NavHostController, function: @Composable (Modif
     ) { innerPadding ->
         // This is where your NavHost goes, using innerPadding to avoid overlap
         Box(modifier = Modifier.padding(innerPadding)) {
-            // Your existing NavHost logic here
+         content(Modifier)
+
         }
     }
 }
