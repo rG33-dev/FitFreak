@@ -102,5 +102,7 @@ dependencies {
     implementation("com.google.android.libraries.identity.googleid:googleid:1.2.0")
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
 
+    implementation("androidx.compose.material3:material3")
+
 }
 

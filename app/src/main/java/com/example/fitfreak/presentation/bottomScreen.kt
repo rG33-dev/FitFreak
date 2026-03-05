@@ -24,21 +24,23 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 
 sealed class ThisScreen(val route: String, val title: String, val icon: ImageVector) {
-    object Home : ThisScreen("main_screen", "Home", Icons.Default.Home)
-    object Tools : ThisScreen("tools_screen", "Tools", Icons.Default.Build)
+
+    object Tools : ThisScreen("main_screen", "Home", Icons.Default.Home)
+    object Home : ThisScreen("tools_screen", "Tools", Icons.Default.Build)
     object Articles : ThisScreen("articles_screen", "Articles", Icons.Default.Article)
 }
 @Composable
 fun RootContainer(navController: NavHostController, content: @Composable (Modifier) -> Unit) {
-    val items = listOf(ThisScreen.Home, ThisScreen.Tools, ThisScreen.Articles)
+    val items = listOf( ThisScreen.Tools,ThisScreen.Home, ThisScreen.Articles)
 
     Scaffold(bottomBar = {
         NavigationBar(
-            containerColor = Color(0xFF474444), // Deep Charcoal
+            containerColor = Color(0xFF1F1D1D),
             contentColor = Color.White,
             tonalElevation = 8.dp
         ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
+
             val currentRoute = navBackStackEntry?.destination?.route
 
             items.forEach { screen ->
