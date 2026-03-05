@@ -11,9 +11,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.fitfreak.presentation.MainScreen
 import com.example.fitfreak.calculators.*
 import com.example.fitfreak.components.ArticlesScreen
-import com.example.fitfreak.components.ToolsScreen
+
 import com.example.fitfreak.data.AuthViewModel
 import com.example.fitfreak.presentation.LoginScreen
 import com.example.fitfreak.presentation.PreviewScreen
@@ -42,7 +43,7 @@ fun FitFreakApp() {
     val currentRoute = navBackStackEntry?.destination?.route
 
     // 2. Screens that should show the Bottom Navigation
-    val bottomNavScreens = listOf("main_screen", "tools_screen", "articles_screen")
+    val bottomNavScreens = listOf("tools_screen", "main_screen", "articles_screen")
     val showBottomBar = currentRoute in bottomNavScreens
 
     if (showBottomBar) {
@@ -110,7 +111,7 @@ fun AppNavigation(
         }
 
         composable("tools_screen") {
-            ToolsScreen()
+            ToolsScreen( navController = navController, authViewModel = authViewModel)
         }
 
 

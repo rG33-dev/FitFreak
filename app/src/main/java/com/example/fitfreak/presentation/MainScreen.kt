@@ -1,39 +1,16 @@
+package com.example.fitfreak.presentation
+
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.ElectricBolt
+import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,195 +20,170 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.rememberLottieComposition
+import com.airbnb.lottie.compose.*
 import com.example.fitfreak.R
 import com.example.fitfreak.data.AuthViewModel
-import com.google.firebase.auth.FirebaseAuth
 
-// Professional Dark Palette
+// Modern Palette
 val DeepBlack = Color(0xFF000000)
-val CharcoalGray = Color(0xFF121212)
-val SurfaceLight = Color(0xFF1E1E1E)
-val ElectricBlue = Color(0xFF00E5FF) // Accent for a "tech" feel
+val SurfaceGray = Color(0xFF121212)
+val ElectricCyan = Color(0xFF00E5FF)
 
-data class CalculatorMenu(
-    val title: String,
-    val description: String,
-    val route: String,
-    val accentColor: Color
-)
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
-    val auth = FirebaseAuth.getInstance()
+    val scrollState = rememberScrollState()
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.ninja)) // Ensure kick.json is in res/raw
 
-    // Auth Check
-    LaunchedEffect(auth.currentUser) {
-        if (auth.currentUser == null) {
-            navController.navigate("signup_screen") { popUpTo(0) }
-        }
-    }
-
-    val menuItems = listOf(
-        CalculatorMenu("BMI", "Body Mass Index", "bmi", Color.White),
-        CalculatorMenu("Calories", "Bulk, Cut, Maintain", "calories", Color.White),
-        CalculatorMenu("Endurance", "Cooper Test & VO2 Max", "endurance", Color.White),
-        CalculatorMenu("PR", "1-Rep Max Calc", "pr", Color.White),
-        CalculatorMenu("Fitness Rank", "Health Assessment", "fitness_level", Color.White),
-        CalculatorMenu("Genetic Limit", "Max Muscle Mass", "max_muscle", Color.White),
-        CalculatorMenu("Strength", "Nippard Scale", "strength_lvl", Color.White),
-        CalculatorMenu("Vitality", "Libido & Score", "sexual_health", Color.White)
-    )
-
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.kick))
-
-    Scaffold(
-        containerColor = DeepBlack,
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = DeepBlack),
-                title = {
-                    Column {
-                        Text(
-                            "FIT SCORE",
-                            color = Color.White,
-                            fontWeight = FontWeight.Black,
-                            letterSpacing = 2.sp
-                        )
-                        Text(
-                            " FUCK AVERAGE",
-                            color = Color.Gray,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        authViewModel.logout()
-                        navController.navigate("signup_screen") { popUpTo(0) }
-                    }) {
-                        Icon(Icons.Default.Logout, contentDescription = "Logout", tint = Color.Gray)
-                    }
-                }
-            )
-        }
-    ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentPadding = PaddingValues(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DeepBlack)
+            .verticalScroll(scrollState)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Header
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Hero Animation Section
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .clip(RoundedCornerShape(24.dp))
-                        .background(Brush.verticalGradient(listOf(SurfaceLight, DeepBlack))),
-                    contentAlignment = Alignment.Center
-                ) {
-                    LottieAnimation(
-                        composition = composition,
-                        iterations = LottieConstants.IterateForever,
-                        modifier = Modifier.size(180.dp)
-                    )
-                }
-            }
-
-            item {
+            Column {
                 Text(
-                    "LAB TOOLS",
+                    "FIT FREAK",
                     color = Color.White,
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
+                    fontWeight = FontWeight.Black,
+                    fontSize = 24.sp,
+                    letterSpacing = 2.sp
+                )
+                Text(
+                    "BEYOND AVERAGE",
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.labelSmall
                 )
             }
+            Icon(Icons.Default.ElectricBolt, contentDescription = null, tint = ElectricCyan)
+        }
 
-            // High-End Grid-like Items
-            items(menuItems) { menu ->
-                ModernMenuCard(menu) {
-                    navController.navigate(menu.route)
-                }
-            }
+        Spacer(modifier = Modifier.height(32.dp))
 
-            // Pro Action
-            item {
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(
-                    onClick = { /* Razorpay */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .border(1.dp, Color.DarkGray, RoundedCornerShape(12.dp)),
-                    colors = ButtonDefaults.buttonColors(containerColor = SurfaceLight),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Text(
-                        "UNLOCK PRO ACCESS",
-                        color = ElectricBlue,
-                        fontWeight = FontWeight.ExtraBold
+        // Central Animation & Score Display
+        Box(
+            modifier = Modifier
+                .size(280.dp)
+                .clip(RoundedCornerShape(140.dp))
+                .background(
+                    Brush.radialGradient(
+                        listOf(
+                            ElectricCyan.copy(alpha = 0.15f),
+                            Color.Transparent
+                        )
                     )
-                }
-                Spacer(modifier = Modifier.height(40.dp))
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            LottieAnimation(
+                composition = composition,
+                iterations = LottieConstants.IterateForever,
+                modifier = Modifier.size(200.dp)
+            )
+
+            // Floating Score Preview (Mock data)
+            Surface(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 20.dp),
+                color = SurfaceGray,
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, ElectricCyan.copy(alpha = 0.5f))
+            ) {
+                Text(
+                    "FIT SCORE: --",
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp
+                )
             }
         }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        // The Fitness Assessment Card
+        FitnessAssessmentCard {
+            // Navigate to the assessment screen
+            navController.navigate("assessment")
+
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Quick Stats Row
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            StatSmallCard("Strength", "Level: ?", Modifier.weight(1f))
+            StatSmallCard("Endurance", "VO2: ?", Modifier.weight(1f))
+        }
+
+        Spacer(modifier = Modifier.height(80.dp)) // Padding for bottom nav
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModernMenuCard(menu: CalculatorMenu, onClick: () -> Unit) {
+fun FitnessAssessmentCard(onClick: () -> Unit) {
     Card(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = SurfaceLight)
+        colors = CardDefaults.cardColors(containerColor = SurfaceGray),
+        shape = RoundedCornerShape(24.dp),
+        border = BorderStroke(0.5.dp, Color.DarkGray)
     ) {
-        Row(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Small decorative dot
-            Box(
-                modifier = Modifier
-                    .size(8.dp)
-                    .clip(CircleShape)
-                    .background(ElectricBlue)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = menu.title.uppercase(),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color.White,
-                    letterSpacing = 1.sp
-                )
-                Text(
-                    text = menu.description,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray
-                )
-            }
-
+        Column(modifier = Modifier.padding(24.dp)) {
             Icon(
-                imageVector = Icons.Default.ArrowForward,
+                Icons.Default.FitnessCenter,
                 contentDescription = null,
-                tint = Color.DarkGray,
-                modifier = Modifier.size(20.dp)
+                tint = ElectricCyan,
+                modifier = Modifier.size(32.dp)
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                "PERFORMANCE AUDIT",
+                color = Color.White,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 20.sp
+            )
+            Text(
+                "Take a 2-minute test to calculate your global fitness rank and biological age.",
+                color = Color.Gray,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+            Button(
+                onClick = onClick,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = ElectricCyan),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("START ASSESSMENT", color = Color.Black, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+}
+
+@Composable
+fun StatSmallCard(label: String, value: String, modifier: Modifier) {
+    Surface(
+        modifier = modifier,
+        color = SurfaceGray,
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(0.5.dp, Color.DarkGray)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(label, color = Color.Gray, fontSize = 12.sp)
+            Text(value, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
     }
 }
