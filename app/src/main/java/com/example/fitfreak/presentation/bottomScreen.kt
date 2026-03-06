@@ -35,7 +35,7 @@ fun RootContainer(navController: NavHostController, content: @Composable (Modifi
 
     Scaffold(bottomBar = {
         NavigationBar(
-            containerColor = Color(0xFF1F1D1D),
+            containerColor = Color(0xFF000000),
             contentColor = Color.White,
             tonalElevation = 8.dp
         ) {
@@ -53,7 +53,7 @@ fun RootContainer(navController: NavHostController, content: @Composable (Modifi
                         selectedTextColor = Color(0xFF00E5FF),
                         unselectedIconColor = Color.Gray,
                         unselectedTextColor = Color.Gray,
-                        indicatorColor = Color(0xFF1E1E1E) // Subtle highlight circle
+                        indicatorColor = Color(0xFF000000) // Subtle highlight circle
                     ),
                     onClick = {
                         navController.navigate(screen.route) {
