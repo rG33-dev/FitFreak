@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fitfreak.presentation.MainScreen
 import com.example.fitfreak.calculators.*
 import com.example.fitfreak.components.ArticlesScreen
+import com.example.fitfreak.components.AssessmentScreen
 
 import com.example.fitfreak.data.AuthViewModel
 import com.example.fitfreak.presentation.LoginScreen
@@ -109,6 +110,10 @@ fun AppNavigation(
         composable("main_screen") {
             MainScreen(navController = navController, authViewModel = authViewModel)
         }
+        composable("assessment_screen") {
+            AssessmentScreen(navController = navController)
+        }
+
 
         composable("tools_screen") {
             ToolsScreen( navController = navController, authViewModel = authViewModel)
@@ -121,6 +126,7 @@ fun AppNavigation(
         // --- Calculators ---
         composable("bmi") { BMICalculatorScreen() }
         composable("calories") { CaloriesCalculatorScreen() }
+
         composable("endurance") { EnduranceLevelScreen() }
         composable("pr") { PRCalculatorScreen() }
         composable("fitness_level") { FitnessLevelScreen() }
