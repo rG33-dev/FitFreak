@@ -15,11 +15,14 @@ import com.example.fitfreak.presentation.MainScreen
 import com.example.fitfreak.calculators.*
 import com.example.fitfreak.components.ArticlesScreen
 import com.example.fitfreak.components.AssessmentScreen
+import com.example.fitfreak.components.ProgressScreen
 
 import com.example.fitfreak.data.AuthViewModel
+import com.example.fitfreak.model.navigation.ProgressScreen
 import com.example.fitfreak.presentation.LoginScreen
 import com.example.fitfreak.presentation.PreviewScreen
 import com.example.fitfreak.presentation.RootContainer
+import com.example.fitfreak.presentation.SupportScreen
 import com.example.fitfreak.ui.theme.FitFreakTheme
 
 class MainActivity : ComponentActivity() {
@@ -114,13 +117,19 @@ fun AppNavigation(
             AssessmentScreen(navController = navController)
         }
 
-
-        composable("tools_screen") {
-            ToolsScreen( navController = navController, authViewModel = authViewModel)
+        composable("support_screen"){
+            SupportScreen(navController = navController)
         }
 
 
-            composable("articles_screen") { ArticlesScreen() }
+        composable("tools_screen") {
+            ToolsScreen( navController = navController)
+        }
+        composable("progress_screen") { ProgressScreen(navController)}
+
+
+        composable("articles_screen") { ArticlesScreen() }
+
 
 
         // --- Calculators ---
