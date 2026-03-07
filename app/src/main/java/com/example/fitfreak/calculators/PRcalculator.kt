@@ -160,7 +160,7 @@ fun ResultDisplay(oneRepMax: Double, exercise: String) {
 
             // Percentage Breakdown Table
             Text("Strength Percentages", fontWeight = FontWeight.Bold)
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             PercentageRow("95% (Power)", oneRepMax * 0.95)
             PercentageRow("85% (Strength)", oneRepMax * 0.85)

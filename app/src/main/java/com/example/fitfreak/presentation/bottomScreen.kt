@@ -3,9 +3,11 @@ package com.example.fitfreak.presentation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -27,11 +29,13 @@ sealed class ThisScreen(val route: String, val title: String, val icon: ImageVec
 
     object Tools : ThisScreen("main_screen", "Home", Icons.Default.Home)
     object Home : ThisScreen("tools_screen", "Tools", Icons.Default.Build)
-    object Articles : ThisScreen("articles_screen", "Articles", Icons.Default.Article)
+    object Articles : ThisScreen("articles_screen", "Articles", Icons.AutoMirrored.Filled.Article)
+
+    object Support : ThisScreen("support_screen", "Support", Icons.Default.SupportAgent)
 }
 @Composable
 fun RootContainer(navController: NavHostController, content: @Composable (Modifier) -> Unit) {
-    val items = listOf( ThisScreen.Tools,ThisScreen.Home, ThisScreen.Articles)
+    val items = listOf( ThisScreen.Tools,ThisScreen.Home, ThisScreen.Articles, ThisScreen.Support)
 
     Scaffold(bottomBar = {
         NavigationBar(
@@ -49,8 +53,8 @@ fun RootContainer(navController: NavHostController, content: @Composable (Modifi
                     label = { Text(screen.title, fontSize = 10.sp) },
                     selected = currentRoute == screen.route,
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color(0xFF00E5FF), // Electric Blue
-                        selectedTextColor = Color(0xFF00E5FF),
+                        selectedIconColor = Color(0xFF64F4F6), // Electric Blue
+                        selectedTextColor = Color(0xFF67FFF4),
                         unselectedIconColor = Color.Gray,
                         unselectedTextColor = Color.Gray,
                         indicatorColor = Color(0xFF000000) // Subtle highlight circle

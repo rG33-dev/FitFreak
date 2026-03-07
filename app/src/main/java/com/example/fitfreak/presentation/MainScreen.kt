@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.ElectricBolt
 import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -26,6 +27,8 @@ import com.airbnb.lottie.compose.*
 import com.example.fitfreak.R
 import com.example.fitfreak.components.SectionCard
 import com.example.fitfreak.data.AuthViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 // Modern Palette
 val DeepBlack = Color(0xFF000000)
@@ -35,7 +38,13 @@ val ElectricCyan = Color(0xFF00E5FF)
 @Composable
 fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
     val scrollState = rememberScrollState()
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.htbt)) // Ensure kick.json is in res/raw
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.htbt))
+    val auth = FirebaseAuth.getInstance()
+    LaunchedEffect(auth.currentUser) {
+        if (auth.currentUser == null) {
+            navController.navigate("signup_screen") { popUpTo(0) }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -45,7 +54,7 @@ fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -65,8 +74,25 @@ fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
                     style = MaterialTheme.typography.labelSmall
                 )
             }
-            Icon(Icons.Default.ElectricBolt, contentDescription = null, tint = ElectricCyan)
+
+
+            IconButton(onClick = {
+                authViewModel.logout()
+                navController.navigate("signup_screen") { popUpTo(0) }
+            }) {
+                Icon(Icons.Default.Logout, contentDescription = "Logout", tint = Color.Gray)
+            }
         }
+
+
+
+
+
+
+
+
+
+
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -115,10 +141,13 @@ fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
         // The Fitness Assessment Card
         SectionCard(
             title = "Performance Audit",
+
             subtitle = "Get your FitFreak Score",
             icon = Icons.Default.TrendingUp,
             accentColor = Color(0xFF00E5FF),
-            onClick = { navController.navigate("assessment_screen") }
+            onClick = {
+                navController.navigate("assessment_screen")
+            }
         )
 
 
@@ -129,12 +158,16 @@ fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            StatSmallCard("Strength", "Level: ?", Modifier.weight(1f).padding(start = 12.dp,end = 12.dp)
+            StatSmallCard(
+                "Strength", "Level: ?", Modifier.weight(1f).padding(start = 12.dp, end = 12.dp)
 
 
-
-                )
-            StatSmallCard("Endurance", "VO2: ?", Modifier.weight(1f).padding(start = 12.dp,end = 12.dp))
+            )
+            StatSmallCard(
+                "Endurance",
+                "VO2: ?",
+                Modifier.weight(1f).padding(start = 12.dp, end = 12.dp)
+            )
         }
 
         Spacer(modifier = Modifier.height(30.dp)) // Padding for bottom nav
@@ -142,8 +175,16 @@ fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            StatSmallCard("Button 3", "Level: ?", Modifier.weight(1f).padding(start = 12.dp,end = 12.dp))
-            StatSmallCard("Button 4", "VO2: ?", Modifier.weight(1f).padding(start = 12.dp,end = 12.dp))
+            StatSmallCard(
+                "Button 3",
+                "Level: ?",
+                Modifier.weight(1f).padding(start = 12.dp, end = 12.dp)
+            )
+            StatSmallCard(
+                "Button 4",
+                "VO2: ?",
+                Modifier.weight(1f).padding(start = 12.dp, end = 12.dp)
+            )
         }
         Spacer(modifier = Modifier.height(80.dp)) // Padding for bottom nav
         Button(
@@ -153,54 +194,15 @@ fun MainScreen(navController: NavHostController, authViewModel: AuthViewModel) {
             border = BorderStroke(1.dp, Color.DarkGray)
         ) {
             Icon(Icons.Default.TrendingUp, contentDescription = null, tint = Color(0xFF00E5FF))
-            Spacer(Modifier.width(8.dp).padding(start = 20.dp,end = 20.dp))
+            Spacer(Modifier.width(8.dp).padding(start = 17.dp, end = 17.dp))
             Text("VIEW EVOLUTION PROGRESS", color = Color.White)
         }
-
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun FitnessAssessmentCard(onClick: () -> Unit) {
-    Card(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = SurfaceGray),
-        shape = RoundedCornerShape(24.dp),
-        border = BorderStroke(0.5.dp, Color.DarkGray)
-    ) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            Icon(
-                Icons.Default.FitnessCenter,
-                contentDescription = null,
-                tint = ElectricCyan,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                "PERFORMANCE AUDIT",
-                color = Color.White,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 20.sp
-            )
-            Text(
-                "Take a 2-minute test to calculate your global fitness rank and biological age.",
-                color = Color.Gray,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-            Button(
-                onClick = onClick,
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = ElectricCyan),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("START ASSESSMENT", color = Color.Black, fontWeight = FontWeight.Bold)
-            }
-        }
-    }
-}
+
+
+
 
 @Composable
 fun StatSmallCard(label: String, value: String, modifier: Modifier) {
@@ -216,3 +218,4 @@ fun StatSmallCard(label: String, value: String, modifier: Modifier) {
         }
     }
 }
+

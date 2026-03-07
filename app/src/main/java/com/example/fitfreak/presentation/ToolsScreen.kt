@@ -66,15 +66,11 @@ data class CalculatorMenu(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToolsScreen(navController: NavHostController, authViewModel: AuthViewModel) {
-    val auth = FirebaseAuth.getInstance()
+fun ToolsScreen(navController: NavHostController,) {
 
-    // Auth Check
-    LaunchedEffect(auth.currentUser) {
-        if (auth.currentUser == null) {
-            navController.navigate("signup_screen") { popUpTo(0) }
-        }
-    }
+
+
+
 
     val menuItems = listOf(
         CalculatorMenu("BMI", "Body Mass Index", "bmi", Color.White),
@@ -109,14 +105,7 @@ fun ToolsScreen(navController: NavHostController, authViewModel: AuthViewModel) 
                         )
                     }
                 },
-                actions = {
-                    IconButton(onClick = {
-                        authViewModel.logout()
-                        navController.navigate("signup_screen") { popUpTo(0) }
-                    }) {
-                        Icon(Icons.Default.Logout, contentDescription = "Logout", tint = Color.Gray)
-                    }
-                }
+
             )
         }
     ) { padding ->
@@ -127,7 +116,7 @@ fun ToolsScreen(navController: NavHostController, authViewModel: AuthViewModel) 
             contentPadding = PaddingValues(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Hero Animation Section
+
             item {
                 Box(
                     modifier = Modifier
