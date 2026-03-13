@@ -1,5 +1,4 @@
-
-package com.example.fitfreak.calculators
+package com.example.fitfreak.AddOns.calculators
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,10 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
-import kotlin.run
 
 
 @OptIn(ExperimentalMaterial3Api::class)

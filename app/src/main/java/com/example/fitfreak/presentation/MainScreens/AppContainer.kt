@@ -1,4 +1,4 @@
-package com.example.fitfreak.presentation
+package com.example.fitfreak.presentation.MainScreens
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface

@@ -1,4 +1,4 @@
-package com.example.fitfreak.components
+package com.example.fitfreak.AddOns.components
 
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke

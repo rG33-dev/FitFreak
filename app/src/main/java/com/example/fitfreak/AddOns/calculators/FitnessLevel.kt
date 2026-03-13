@@ -1,4 +1,4 @@
-package com.example.fitfreak.calculators
+package com.example.fitfreak.AddOns.calculators
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

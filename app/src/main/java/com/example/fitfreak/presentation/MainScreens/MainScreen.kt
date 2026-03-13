@@ -1,4 +1,4 @@
-package com.example.fitfreak.presentation
+package com.example.fitfreak.presentation.MainScreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -7,9 +7,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.TrendingUp
-import androidx.compose.material.icons.filled.ElectricBolt
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.*
@@ -25,10 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.example.fitfreak.R
-import com.example.fitfreak.components.SectionCard
+import com.example.fitfreak.AddOns.components.SectionCard
 import com.example.fitfreak.data.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 // Modern Palette
 val DeepBlack = Color(0xFF000000)
