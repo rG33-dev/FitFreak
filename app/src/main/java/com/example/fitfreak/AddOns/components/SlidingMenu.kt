@@ -1,4 +1,4 @@
-package com.example.fitfreak.components
+package com.example.fitfreak.AddOns.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

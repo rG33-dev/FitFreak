@@ -1,4 +1,4 @@
-package com.example.fitfreak.components
+package com.example.fitfreak.AddOns.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

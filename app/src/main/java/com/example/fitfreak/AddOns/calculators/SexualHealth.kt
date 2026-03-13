@@ -1,4 +1,4 @@
-package com.example.fitfreak.calculators
+package com.example.fitfreak.AddOns.calculators
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState

@@ -1,5 +1,7 @@
-package com.example.fitfreak.model.navigation
+package com.example.fitfreak.presentation.MainScreens
 
+import android.annotation.SuppressLint
+import android.app.Application
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -10,30 +12,42 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
+
+import com.example.fitfreak.model.viewModel.FitnessViewModel2
+
+@SuppressLint("ViewModelConstructorInComposable")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProgressScreen(navController: NavHostController) {
     // In a real app, these would come from a Database/ViewModel
-    val currentScore = 74f // Latest Fit Score
-    val previousScore = 58f // Last month's score
+
 
     val electricCyan = Color(0xFF00E5FF)
     val deepBlack = Color(0xFF000000)
     val surfaceGray = Color(0xFF121212)
+
+    val history by FitnessViewModel2(LocalContext.current.applicationContext as Application).history.collectAsState(initial = emptyList())
+
+
+    // Calculate stats based on real data
+    val currentScore = history.firstOrNull()?.score?.toFloat() ?: 0f
+    val previousScore = if (history.size > 1) {
+        history[1].score.toFloat()
+    } else currentScore
+    val improvement = if (previousScore > 0) ((currentScore - previousScore) / previousScore * 100).toInt() else 0
 
     Scaffold(
         containerColor = deepBlack,

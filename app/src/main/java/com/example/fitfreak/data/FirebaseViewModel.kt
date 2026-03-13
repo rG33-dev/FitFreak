@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 
-class AuthViewModel : ViewModel() {
+open class AuthViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
 
     // This state tells the UI if the user is logged in or not
