@@ -2,14 +2,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Mail
@@ -17,11 +15,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import com.example.fitfreak.R
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -34,19 +27,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.fitfreak.data.AuthState
-import com.example.fitfreak.data.AuthViewModel
+import com.example.fitfreak.model.viewModel.AuthState
+import com.example.fitfreak.model.viewModel.AuthViewModel
 import com.example.fitfreak.presentation.UserScreens.ElectricCyan
 import com.example.fitfreak.presentation.UserScreens.FitTextField
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun SignUpScreen(onNavigateToLogin: () -> Unit, authViewModel: AuthViewModel,onSignUpSuccess: () -> Unit) {
@@ -63,6 +53,10 @@ fun SignUpScreen(onNavigateToLogin: () -> Unit, authViewModel: AuthViewModel,onS
             onSignUpSuccess()
         }
         else if (signUpState is AuthState.Error) {
+
+            val errorMessage = (signUpState as AuthState.Error).message
+
+
 
         }
     }
@@ -145,6 +139,22 @@ fun SignUpScreen(onNavigateToLogin: () -> Unit, authViewModel: AuthViewModel,onS
                 Text("ALREADY A FREAK? ", color = Color.Gray)
                 Text("LOG IN", color = ElectricCyan, fontWeight = FontWeight.Bold)
             }
+            Button(
+                onClick = {  },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                shape = RoundedCornerShape(12.dp)
+
+            ) {
+                Text(
+                    "NOtification"
+                )
+            }
+
+
+
         }
     }
 }

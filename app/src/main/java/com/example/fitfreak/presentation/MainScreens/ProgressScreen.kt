@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -31,8 +31,8 @@ import com.example.fitfreak.model.viewModel.FitnessViewModel2
 @SuppressLint("ViewModelConstructorInComposable")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProgressScreen(navController: NavHostController) {
-    // In a real app, these would come from a Database/ViewModel
+fun ProgressScreen(navController: NavHostController,viewModel2: FitnessViewModel2) {
+
 
 
     val electricCyan = Color(0xFF00E5FF)
@@ -63,7 +63,7 @@ fun ProgressScreen(navController: NavHostController) {
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null, tint = Color.White)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = deepBlack)
@@ -108,14 +108,14 @@ fun ProgressScreen(navController: NavHostController) {
                 ) {
                     StatComparisonCard(
                         label = "Improvement",
-                        value = "+${(currentScore - previousScore).toInt()}%",
+                        value = improvement,
                         subtext = "Since last audit",
                         modifier = Modifier.weight(1f),
                         accentColor = electricCyan
                     )
                     StatComparisonCard(
                         label = "Global Rank",
-                        value = "Top 12%",
+                        value =  12,
                         subtext = "Vs all users",
                         modifier = Modifier.weight(1f),
                         accentColor = Color.White
@@ -188,7 +188,7 @@ fun CircularProgressSection(score: Float, color: Color) {
 @Composable
 fun StatComparisonCard(
     label: String,
-    value: String,
+    value: Int,
     subtext: String,
     modifier: Modifier,
     accentColor: Color
@@ -200,7 +200,7 @@ fun StatComparisonCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(label, color = Color.Gray, fontSize = 12.sp)
-            Text(value, color = accentColor, fontSize = 22.sp, fontWeight = FontWeight.Black)
+            //Text(value, color = accentColor, fontSize = 22.sp, fontWeight = FontWeight.Black)
             Text(subtext, color = Color.DarkGray, fontSize = 10.sp)
         }
     }
