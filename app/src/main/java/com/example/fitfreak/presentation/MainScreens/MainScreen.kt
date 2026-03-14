@@ -17,13 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.example.fitfreak.R
 import com.example.fitfreak.AddOns.components.SectionCard
-import com.example.fitfreak.data.AuthViewModel
+import com.example.fitfreak.model.viewModel.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 // Modern Palette

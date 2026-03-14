@@ -111,6 +111,11 @@ dependencies {
     ksp("androidx.room:room-compiler:2.8.4")
     implementation("androidx.room:room-ktx:2.8.4")
 
+    //glance widgets
+    implementation("androidx.glance:glance-appwidget:1.1.1")
+// For interop APIs with Material 3
+    implementation("androidx.glance:glance-material3:1.1.1")
+
 
 }
 

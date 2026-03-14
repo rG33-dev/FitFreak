@@ -1,4 +1,4 @@
-package com.example.fitfreak.data
+package com.example.fitfreak.model.viewModel
 
 
 import androidx.compose.runtime.State
@@ -41,7 +41,6 @@ open class AuthViewModel : ViewModel() {
             }
 
     }
-
     fun signUp(email: String, password: String) {
         _authState.value = AuthState.Loading
         auth.createUserWithEmailAndPassword(email, password)
@@ -55,13 +54,6 @@ open class AuthViewModel : ViewModel() {
             }
 
     }
-
-
-
-
-
-
-
     fun logout() {
         auth.signOut()
         _authState.value = AuthState.Unauthenticated

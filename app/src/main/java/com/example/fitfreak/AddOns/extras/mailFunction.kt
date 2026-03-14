@@ -1,14 +1,14 @@
-package com.example.fitfreak.data
+package com.example.fitfreak.AddOns.extras
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.core.net.toUri
 
 fun sendEmail(context: Context) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:raghavsankhyaan@gmail.com")
+        data = "mailto:MAIL HERE".toUri()
         putExtra(Intent.EXTRA_SUBJECT, "FitFreak Support")
-       // putExtra(Intent.EXTRA_TEXT, "Hello developer, I want to report an issue.")
     }
 
     context.startActivity(intent)

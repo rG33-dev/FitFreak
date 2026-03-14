@@ -17,8 +17,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.fitfreak.data.sendEmail
+import com.example.fitfreak.AddOns.extras.sendEmail
 import com.google.firebase.auth.FirebaseAuth
+
+
 
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +43,7 @@ import com.google.firebase.auth.FirebaseAuth
                             fontSize = 16.sp
                         )
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Black)
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
                 )
             }
         ) { padding ->
@@ -70,8 +72,10 @@ import com.google.firebase.auth.FirebaseAuth
                         iconColor = Color.Red,
                         onClick = {
                             auth.signOut()
+
                             navController.navigate("login_screen") {
-                                popUpTo(0) { inclusive = true }
+                                popUpTo("main_screen") { inclusive = true }
+                                launchSingleTop = true
                             }
                         }
                     )
@@ -100,7 +104,7 @@ import com.google.firebase.auth.FirebaseAuth
 
                 item { Spacer(modifier = Modifier.height(16.dp)) }
 
-                // --- HELP & DEV ---
+
                 item { SupportHeader("HELP & FEEDBACK") }
                 item {
                     SupportItem(

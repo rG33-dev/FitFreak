@@ -1,4 +1,4 @@
-package com.example.fitfreak.AddOns.components
+package com.example.fitfreak.presentation.MainScreens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,14 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.fitfreak.AddOns.components.AssessmentInputField
+import com.example.fitfreak.model.viewModel.FitnessViewModel2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AssessmentScreen(navController: NavHostController) {
-    var pushups by remember { mutableStateOf("") }
-    var plankSeconds by remember { mutableStateOf("") }
-    var squatHoldSeconds by remember { mutableStateOf("") }
-    var runMinutes by remember { mutableStateOf("") }
+fun AssessmentScreen(navController: NavHostController, viewModel: FitnessViewModel2) {
+    var pushups by remember { mutableStateOf("0") }
+    var plankSeconds by remember { mutableStateOf("0") }
+    var squatHoldSeconds by remember { mutableStateOf("0") }
+    var runMinutes by remember { mutableStateOf("0") }
 
     val scrollState = rememberScrollState()
     val electricCyan = Color(0xFF00E5FF)
@@ -82,13 +84,15 @@ fun AssessmentScreen(navController: NavHostController) {
                     val s = squatHoldSeconds.toIntOrNull() ?: 0
                     val r = runMinutes.toFloatOrNull() ?: 10f
 
-                    // FitFreak Algorithm: Higher is better (Max ~100)
+
                     val score =
                         ((p * 1.5) + (pl / 3) + (s / 4) + (40 - (r * 3))).toInt().coerceIn(10, 99)
 
-                    // Navigate back with result or save to ViewModel
-                    navController.previousBackStackEntry?.savedStateHandle?.set("fit_score", score)
-                    navController.popBackStack()
+
+                    viewModel.history
+                    viewModel.saveResult(score,p,pl,r,s)
+
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -99,7 +103,7 @@ fun AssessmentScreen(navController: NavHostController) {
                 Text("CALCULATE MY SCORE", color = Color.Black, fontWeight = FontWeight.ExtraBold)
             }
 
-            // Helpful tip
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -119,29 +123,3 @@ fun AssessmentScreen(navController: NavHostController) {
     }
 }
 
-@Composable
-fun AssessmentInputField(label: String, value: String, onValueChange: (String) -> Unit) {
-    Column {
-        Text(
-            label,
-            color = Color.Gray,
-            fontSize = 12.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        TextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color(0xFF121212),
-                unfocusedContainerColor = Color(0xFF121212),
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedIndicatorColor = Color(0xFF00E5FF),
-                unfocusedIndicatorColor = Color.DarkGray
-            ),
-            shape = RoundedCornerShape(8.dp),
-            singleLine = true
-        )
-    }
-}

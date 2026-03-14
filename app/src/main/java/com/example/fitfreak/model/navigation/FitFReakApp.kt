@@ -1,8 +1,6 @@
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -11,47 +9,41 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.fitfreak.presentation.MainScreen
-import com.example.fitfreak.calculators.*
-import com.example.fitfreak.components.ArticlesScreen
-import com.example.fitfreak.components.AssessmentScreen
-import com.example.fitfreak.components.ProgressScreen
-
-import com.example.fitfreak.data.AuthViewModel
-import com.example.fitfreak.model.navigation.ProgressScreen
-import com.example.fitfreak.presentation.LoginScreen
-import com.example.fitfreak.presentation.PreviewScreen
-import com.example.fitfreak.presentation.RootContainer
-import com.example.fitfreak.presentation.SupportScreen
-import com.example.fitfreak.ui.theme.FitFreakTheme
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            FitFreakTheme {
-                FitFreakApp()
-            }
-        }
-    }
-}
+import com.example.fitfreak.AddOns.calculators.*
+import com.example.fitfreak.AddOns.components.*
+import com.example.fitfreak.model.viewModel.AuthViewModel
+import com.example.fitfreak.model.viewModel.FitnessViewModel2
+import com.example.fitfreak.presentation.MainScreens.*
+import com.example.fitfreak.presentation.UserScreens.LoginScreen
 
 @Composable
 fun FitFreakApp() {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
 
-    // 1. Get current route to decide if we show BottomBar
+
+    val user by authViewModel.authState
+
+    LaunchedEffect(user) {
+        if (user == null) {
+            navController.navigate("login_screen") {
+                popUpTo(0) { inclusive = true }
+            }
+
+        }
+        else{
+            navController.navigate("main_screen")
+        }
+    }
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    // 2. Screens that should show the Bottom Navigation
-    val bottomNavScreens = listOf("tools_screen", "main_screen", "articles_screen")
+    val bottomNavScreens =
+        listOf("tools_screen", "main_screen", "articles_screen", "support_screen")
     val showBottomBar = currentRoute in bottomNavScreens
 
     if (showBottomBar) {
-        // Main App Layout (With Bottom Bar)
         RootContainer(navController = navController) { modifier ->
             AppNavigation(
                 navController = navController,
@@ -60,7 +52,6 @@ fun FitFreakApp() {
             )
         }
     } else {
-        // Auth Layout (No Bottom Bar)
         AppNavigation(
             navController = navController,
             authViewModel = authViewModel,
@@ -75,12 +66,14 @@ fun AppNavigation(
     authViewModel: AuthViewModel,
     modifier: Modifier
 ) {
+
+    val fitnessViewModel: FitnessViewModel2 = viewModel()
+
     NavHost(
         navController = navController,
         startDestination = "PreviewScreen",
-        modifier = modifier // Important: This handles the BottomBar padding
+        modifier = modifier
     ) {
-        // --- Auth & Splash ---
         composable("PreviewScreen") {
             PreviewScreen(navController = navController)
         }
@@ -102,40 +95,37 @@ fun AppNavigation(
                 onNavigateToSignUp = { navController.navigate("signup_screen") },
                 onLoginSuccess = {
                     navController.navigate("main_screen") {
+
+
                         popUpTo("login_screen") { inclusive = true }
+
+
                     }
                 },
                 authViewModel = authViewModel
             )
         }
 
-        // --- Main Content ---
         composable("main_screen") {
             MainScreen(navController = navController, authViewModel = authViewModel)
         }
+
         composable("assessment_screen") {
-            AssessmentScreen(navController = navController)
+
+            AssessmentScreen(navController = navController, viewModel = fitnessViewModel)
         }
 
-        composable("support_screen"){
-            SupportScreen(navController = navController)
+        composable("progress_screen") {
+            ProgressScreen(navController= navController,viewModel2 = fitnessViewModel)
         }
 
-
-        composable("tools_screen") {
-            ToolsScreen( navController = navController)
-        }
-        composable("progress_screen") { ProgressScreen(navController)}
-
-
+        composable("tools_screen") { ToolsScreen(navController = navController) }
         composable("articles_screen") { ArticlesScreen() }
-
-
+        composable("support_screen") { SupportScreen(navController = navController) }
 
         // --- Calculators ---
         composable("bmi") { BMICalculatorScreen() }
         composable("calories") { CaloriesCalculatorScreen() }
-
         composable("endurance") { EnduranceLevelScreen() }
         composable("pr") { PRCalculatorScreen() }
         composable("fitness_level") { FitnessLevelScreen() }

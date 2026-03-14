@@ -43,8 +43,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.fitfreak.data.AuthState
-import com.example.fitfreak.data.AuthViewModel
+import com.example.fitfreak.model.viewModel.AuthState
+import com.example.fitfreak.model.viewModel.AuthViewModel
 
 // Modern Palette
 val DeepBlack = Color(0xFF000000)
@@ -63,10 +63,7 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit, authViewModel: AuthViewModel, on
 
             onLoginSuccess()
         }
-        else(
-                loginState is AuthState.Error
 
-        )
     }
 
 
@@ -88,7 +85,8 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit, authViewModel: AuthViewModel, on
                 LottieAnimation(
                     composition = lottieComposition,
                     iterations = LottieConstants.IterateForever,
-                    modifier = Modifier.size(200.dp)
+                    modifier = Modifier.fillMaxWidth().size(400.dp)
+                        //.background(brush = Brush.verticalGradient())
                 )
                 Text(
                     text = "WELCOME BACK",

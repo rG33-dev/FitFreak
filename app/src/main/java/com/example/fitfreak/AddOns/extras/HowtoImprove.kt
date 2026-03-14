@@ -1,4 +1,4 @@
-package com.example.fitfreak.data
+package com.example.fitfreak.AddOns.extras
 
 import android.content.Context
 import android.content.Intent
