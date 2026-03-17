@@ -27,6 +27,8 @@ fun FitFreakApp() {
 
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+
     val currentRoute = navBackStackEntry?.destination?.route
 
     val bottomNavScreens =
