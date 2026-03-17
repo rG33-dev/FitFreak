@@ -52,13 +52,11 @@ fun SignUpScreen(onNavigateToLogin: () -> Unit, authViewModel: AuthViewModel,onS
         if (signUpState is AuthState.Authenticated) {
             onSignUpSuccess()
         }
-        else if (signUpState is AuthState.Error) {
-
-            val errorMessage = (signUpState as AuthState.Error).message
 
 
 
-        }
+
+
     }
 
 
@@ -139,19 +137,7 @@ fun SignUpScreen(onNavigateToLogin: () -> Unit, authViewModel: AuthViewModel,onS
                 Text("ALREADY A FREAK? ", color = Color.Gray)
                 Text("LOG IN", color = ElectricCyan, fontWeight = FontWeight.Bold)
             }
-            Button(
-                onClick = {  },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                shape = RoundedCornerShape(12.dp)
 
-            ) {
-                Text(
-                    "NOtification"
-                )
-            }
 
 
 

@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
     fun SupportScreen(navController: NavHostController) {
         val auth = FirebaseAuth.getInstance()
         val user = auth.currentUser
-        val electricCyan = Color(0xFF00E5FF)
+
         val context = LocalContext.current
 
         Scaffold(
@@ -72,11 +72,7 @@ import com.google.firebase.auth.FirebaseAuth
                         iconColor = Color.Red,
                         onClick = {
                             auth.signOut()
-
-                            navController.navigate("login_screen") {
-                                popUpTo("main_screen") { inclusive = true }
-                                launchSingleTop = true
-                            }
+                            navController.navigate("login_screen")
                         }
                     )
                 }

@@ -24,17 +24,7 @@ fun FitFreakApp() {
 
     val user by authViewModel.authState
 
-    LaunchedEffect(user) {
-        if (user == null) {
-            navController.navigate("login_screen") {
-                popUpTo(0) { inclusive = true }
-            }
 
-        }
-        else{
-            navController.navigate("main_screen")
-        }
-    }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -94,6 +84,7 @@ fun AppNavigation(
             LoginScreen(
                 onNavigateToSignUp = { navController.navigate("signup_screen") },
                 onLoginSuccess = {
+
                     navController.navigate("main_screen") {
 
 
