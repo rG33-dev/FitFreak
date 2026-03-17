@@ -3,7 +3,13 @@
 FitFreak is an Android fitness app written in Kotlin. It provides features to track workouts, monitor progress, and manage fitness routines. This repository contains the Android app module and build configuration (Gradle/Kotlin DSL).
 
 ## Demo
-![FitFreak Demo](fitfreakGIF1.mp4)
+![Screens](app/src/main/java/com/example/screenShots/ss1.png) ![Screens](app/src/main/java/com/example/screenShots/ss2.png)
+![Screens](app/src/main/java/com/example/screenShots/ss3.png)![Screens](app/src/main/java/com/example/screenShots/ss4.png)
+![Screens](app/src/main/java/com/example/screenShots/ss5.png)![Screens](app/src/main/java/com/example/screenShots/ss6.png)
+
+
+
+
 
 ## Key points
 - Language: Kotlin
