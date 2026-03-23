@@ -1,11 +1,15 @@
-# FitFreak
+# FitFreak  
+Currently out of development cause I'M BORED.
 
-FitFreak is an Android fitness app written in Kotlin. It provides features to track workouts, monitor progress, and manage fitness routines. This repository contains the Android app module and build configuration (Gradle/Kotlin DSL).
+FitFreak is an Android fitness app written in Kotlin.
+It provides features to track workouts, monitor progress, and manage fitness routines.
+This repository contains the Android app module and build configuration (Gradle/Kotlin DSL).
 
 ## Demo
-![Screens](app/src/main/java/com/example/screenShots/ss1.png) ![Screens](app/src/main/java/com/example/screenShots/ss2.png)
-![Screens](app/src/main/java/com/example/screenShots/ss3.png)![Screens](app/src/main/java/com/example/screenShots/ss4.png)
-![Screens](app/src/main/java/com/example/screenShots/ss5.png)![Screens](app/src/main/java/com/example/screenShots/ss6.png)
+https://github.com/user-attachments/assets/1e2100c6-7a09-4b6c-ba54-b0953a09b82e
+
+
+
 
 
 
@@ -18,16 +22,11 @@ FitFreak is an Android fitness app written in Kotlin. It provides features to tr
 - Gradle wrapper included (`gradlew`, `gradlew.bat`)
 
 ## Features (example)
-- Track workouts and session history
-- Create and customize workout plans
+- Track workouts PR's 
+- Check your max lifts and overall performance
 - View performance stats and progress over time
-- (Add features you plan to implement: e.g., heart-rate integration, sync, social sharing)
+-  Future updates : (Add features you plan to implement: e.g., heart-rate integration, sync, social sharing)
 
-## Requirements
-- Android Studio Arctic Fox or newer (recommended)
-- JDK 11+ (or the JDK version set in `gradle.properties`)
-- Android SDK matching project compileSdkVersion (open the project in Android Studio to install)
-- A physical device or emulator running a compatible Android version
 
 ## Getting started (development)
 1. Clone the repository:
@@ -56,11 +55,7 @@ FitFreak is an Android fitness app written in Kotlin. It provides features to tr
 - The repo uses Kotlin and Gradle Kotlin DSL (KTS). If you need to change SDK or Kotlin versions, update `app/build.gradle.kts` and root `build.gradle.kts`.
 - ProGuard/R8 rules are in `app/proguard-rules.pro` — adjust when enabling release minification/obfuscation.
 
-## Testing
-- Add unit tests under `app/src/test` and instrumented tests under `app/src/androidTest`.
-- Run tests:
-  - ./gradlew test
-  - ./gradlew connectedAndroidTest
+
 
 ## Contributing
 Contributions are welcome. Suggested workflow:
@@ -79,8 +74,7 @@ Please include:
 - Add charts and progress visualizations
 - Integrate with wearable/health APIs
 
-## License
-Add your license here (e.g., MIT). If you want me to add a license file, tell me which license to use.
+
 
 ## Contact
-Repository owner: rG33-dev
+Repository owner: 
